@@ -1,22 +1,31 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { BaseEntity } from '../common/base.entity';
 
 @Entity()
-export class SubContract {
-  @PrimaryGeneratedColumn()
-  id: number;
+export class SubContract extends BaseEntity {
+
 
   @Column()
   company_name: string;
 
   @Column()
-  duration: number;
+  start_date: Date;
 
   @Column()
-  total_amount: number;
+  end_date: Date;
+
+  @Column()
+  amount: number;
 
   @Column()
   number_of_employees: number;
 
   @Column()
-  attachment_url: string;
+  file_url: string;
+
+  @Column()
+  service_type: string;
+
+  @Column()
+  building_ids: string;
 } 

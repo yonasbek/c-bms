@@ -12,6 +12,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       database: 'cbms',
       autoLoadEntities: true,
       synchronize: true, // Auto-migrates schema
+      entities: [__dirname + '/../**/*.entity.{js,ts}'],
+      
       logging: true,
     }),
   ],

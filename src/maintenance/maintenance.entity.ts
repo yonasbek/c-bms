@@ -1,16 +1,21 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { BaseEntity } from '../common/base.entity';
+import { Contract } from 'src/contract/contract.entity';
 
 @Entity()
-export class MaintenanceRequest {
-  @PrimaryGeneratedColumn()
-  id: number;
+export class MaintenanceRequest extends BaseEntity {
 
-  @Column()
-  contract_id: string;
+
+  @ManyToOne(() => Contract, { eager: true }) // Establish foreign key relationship with Contract
+  contract: Contract;
 
   @Column()
   description: string;
 
   @Column()
   request_status: string;
+
+  @Column()
+  special_note: string;
+  
 } 
