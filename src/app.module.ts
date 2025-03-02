@@ -10,6 +10,9 @@ import { NotificationModule } from './notification/notification.module';
 import { MaintenanceModule } from './maintenance/maintenance.module';
 import { AccountModule } from './account/account.module';
 import { InventoryModule } from './inventory/inventory.module';
+import { BuildingModule } from './building/building.module';
+import { BuildingUserModule } from './building-user/building-user.module';
+import { PaymentModule } from './payment/payment.module';
 
 @Module({
   imports: [
@@ -22,6 +25,9 @@ import { InventoryModule } from './inventory/inventory.module';
     MaintenanceModule,
     AccountModule,
     InventoryModule,
+    BuildingModule,
+    BuildingUserModule,
+    PaymentModule,
   ],
   controllers: [AppController],
   providers: [AppService],
