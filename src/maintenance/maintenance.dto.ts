@@ -17,3 +17,8 @@ export class CreateMaintenanceDto {
   @IsString()
   request_status: string;
 } 
+
+export class GetMaintenanceRequestByRoomIdDto {
+    @IsNotEmpty()
+    roomId: number;
+}
