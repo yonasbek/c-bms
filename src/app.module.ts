@@ -13,6 +13,8 @@ import { InventoryModule } from './inventory/inventory.module';
 import { BuildingModule } from './building/building.module';
 import { BuildingUserModule } from './building-user/building-user.module';
 import { PaymentModule } from './payment/payment.module';
+import { RoomModule } from './room/room.module';
+import { FloorModule } from './floor/floor.module';
 
 @Module({
   imports: [
@@ -28,6 +30,8 @@ import { PaymentModule } from './payment/payment.module';
     BuildingModule,
     BuildingUserModule,
     PaymentModule,
+    RoomModule,
+    FloorModule
   ],
   controllers: [AppController],
   providers: [AppService],
