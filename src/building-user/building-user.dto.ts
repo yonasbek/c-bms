@@ -8,7 +8,4 @@ export class CreateBuildingUserDto {
     userId: number;
 } 
 
-export class GetBuildingUserByBuildingIdDto {
-    @IsNotEmpty()
-    buildingId: number;
-}
+

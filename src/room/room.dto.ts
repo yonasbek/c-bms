@@ -11,7 +11,4 @@ export class CreateRoomDto {
     userId: number; // Reference to the User
 } 
 
-export class GetRoomByFloorIdDto {
-    @IsNotEmpty()
-    floorId: number; // Reference to the Floor
-}
+

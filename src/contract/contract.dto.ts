@@ -38,8 +38,5 @@ export class CreateContractDto {
   status: string;
 } 
 
-export class GetContractByRoomIdDto {
-    @IsNotEmpty()
-    roomId: number;
-}
+
 

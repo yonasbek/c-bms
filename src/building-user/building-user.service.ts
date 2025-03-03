@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { BuildingUser } from './building-user.entity';
-import { CreateBuildingUserDto, GetBuildingUserByBuildingIdDto } from './building-user.dto';
+import { CreateBuildingUserDto } from './building-user.dto';
 import { BaseService } from '../common/base.service';
 
 @Injectable()
@@ -14,8 +14,8 @@ export class BuildingUserService extends BaseService<BuildingUser> {
         super(buildingUserRepository);
     }
 
-    async getBuildingUserByBuildingId(getBuildingUserByBuildingIdDto: GetBuildingUserByBuildingIdDto): Promise<BuildingUser[]> {
-        return this.buildingUserRepository.find({ where: { buildingId: getBuildingUserByBuildingIdDto.buildingId } });
+    async getBuildingUserByBuildingId(userId: number): Promise<BuildingUser[]> {
+        return this.buildingUserRepository.find({ where: { userId: userId } });
     }
 
     // Additional methods can be added here

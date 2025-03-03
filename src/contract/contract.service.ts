@@ -3,7 +3,6 @@ import { BaseService } from '../common/base.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Contract } from './contract.entity';
-import { CreateContractDto, GetContractByRoomIdDto } from './contract.dto';
 
 @Injectable()
 export class ContractService extends BaseService<Contract> {
@@ -11,7 +10,7 @@ export class ContractService extends BaseService<Contract> {
     super(repository);
   }
 
-  async getContractByRoomId(getContractByRoomIdDto: GetContractByRoomIdDto): Promise<Contract[]> {
-    return this.repository.find({ where: { roomId: getContractByRoomIdDto.roomId } });
+  async getContractByRoomId(roomId: number): Promise<Contract[]> {
+    return this.repository.find({ where: { roomId: roomId } });
   }
 } 

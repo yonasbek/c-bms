@@ -4,8 +4,7 @@ import { ContractService } from './contract.service';
 import { CreateContractDto } from './contract.dto';
 import { Contract } from './contract.entity';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { GetContractByRoomIdDto } from './contract.dto';
+import { ApiBearerAuth, ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
 
 @Controller('contracts')
 @ApiBearerAuth() // Show auth button in Swagger
@@ -17,10 +16,10 @@ export class ContractController extends BaseController<Contract> {
 
   @Get('room/:roomId')
   @ApiOperation({ summary: 'Get contracts by room id' })
-  @ApiBody({ type: GetContractByRoomIdDto })
+  @ApiParam({ name: 'roomId', type: Number, description: 'Room ID' })
   @ApiResponse({ status: 200, description: 'Contracts retrieved successfully' })
-  async getContractByRoomId(@Param('roomId') getContractByRoomIdDto: GetContractByRoomIdDto): Promise<Contract[]> {
-    return this.contractService.getContractByRoomId(getContractByRoomIdDto);
+  async getContractByRoomId(@Param('roomId') roomId: number): Promise<Contract[]> {
+    return this.contractService.getContractByRoomId(roomId);
   }
 
 } 

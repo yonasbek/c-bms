@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Floor } from './floor.entity';
-import { CreateFloorDto, GetFloorByBuildingIdDto } from './floor.dto';
+import { CreateFloorDto } from './floor.dto';
 import { BaseService } from '../common/base.service';
 import { Building } from '../building/building.entity';
 
@@ -16,8 +16,8 @@ export class FloorService extends BaseService<Floor> {
     ) {
         super(floorRepository);
     }
-    async getFloorByBuildingId(getFloorByBuildingIdDto: GetFloorByBuildingIdDto): Promise<Floor[]> {
-        return this.floorRepository.find({ where: { buildingId: getFloorByBuildingIdDto.buildingId } });
+    async getFloorByBuildingId(buildingId: number): Promise<Floor[]> {
+        return this.floorRepository.find({ where: { buildingId: buildingId } });
     }
 
     // Additional methods can be added here
