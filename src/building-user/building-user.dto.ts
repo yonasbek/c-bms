@@ -7,3 +7,8 @@ export class CreateBuildingUserDto {
     @IsNotEmpty()
     userId: number;
 } 
+
+export class GetBuildingUserByBuildingIdDto {
+    @IsNotEmpty()
+    buildingId: number;
+}

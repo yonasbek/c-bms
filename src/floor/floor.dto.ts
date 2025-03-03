@@ -7,3 +7,8 @@ export class CreateFloorDto {
     @IsNotEmpty()
     buildingId: number; // Reference to the Building
 } 
+
+export class GetFloorByBuildingIdDto {
+    @IsNotEmpty()
+    buildingId: number; // Reference to the Building
+}
