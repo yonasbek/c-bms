@@ -16,7 +16,6 @@ export class RoomController extends BaseController<Room> {
 
     @Get('floor/:floorId')
     @ApiOperation({ summary: 'Get rooms by floor id' })
-    @ApiParam({ name: 'floorId', type: Number, description: 'Room ID' })
     @ApiResponse({ status: 200, description: 'Rooms retrieved successfully' })
     async getRoomByFloorId(@Param('floorId') floorId: number): Promise<Room[]> {
         return this.roomService.getRoomByFloorId(floorId);

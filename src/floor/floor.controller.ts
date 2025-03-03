@@ -17,7 +17,6 @@ export class FloorController extends BaseController<Floor> {
     @Get('building/:buildingId')
     @ApiOperation({ summary: 'Get floors by building id' })
     @ApiResponse({ status: 200, description: 'Floors retrieved successfully' })
-    @ApiParam({ name: 'id', type: Number, description: 'BuildingUser ID' })
     async getFloorByBuildingId(@Param('buildingId') buildingId: number): Promise<Floor[]> {
         return this.floorService.getFloorByBuildingId(buildingId);
     }

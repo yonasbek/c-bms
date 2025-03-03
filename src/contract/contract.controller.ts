@@ -16,7 +16,6 @@ export class ContractController extends BaseController<Contract> {
 
   @Get('room/:roomId')
   @ApiOperation({ summary: 'Get contracts by room id' })
-  @ApiParam({ name: 'roomId', type: Number, description: 'Room ID' })
   @ApiResponse({ status: 200, description: 'Contracts retrieved successfully' })
   async getContractByRoomId(@Param('roomId') roomId: number): Promise<Contract[]> {
     return this.contractService.getContractByRoomId(roomId);

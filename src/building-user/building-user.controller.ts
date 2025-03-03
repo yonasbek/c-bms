@@ -15,7 +15,6 @@ export class BuildingUserController extends BaseController<BuildingUser> {
     }
     @Get('building/:buildingId')
     @ApiOperation({ summary: 'Get building users by building id' })
-    @ApiParam({ name: 'id', type: Number, description: 'BuildingUser ID' })
     @ApiResponse({ status: 200, description: 'Building users retrieved successfully' })
     async getBuildingUserByBuildingId(@Param('userId') userId: number): Promise<BuildingUser[]> {
         return this.buildingUserService.getBuildingUserByBuildingId(userId);
