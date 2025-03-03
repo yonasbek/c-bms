@@ -8,13 +8,14 @@ export class BaseService<T> {
   async create(data: Partial<T>): Promise<T> {
     return this.repository.save(data as T);
   }
-
   async findAll(options?: FindManyOptions<T>): Promise<T[]> {
-    return this.repository.find(options);
+    return this.repository.find({ ...options });
+    // return this.repository.find({ ...options, relations: this.getRelations() });
   }
 
   async findById(id: number): Promise<T | null> {
     return this.repository.findOne({ where: { id: id } as any });
+    // return this.repository.findOne({ where: { id: id } as any, relations: this.getRelations() });
   }
 
   async update(id: number, data: Partial<T>): Promise<T> {
@@ -34,4 +35,11 @@ export class BaseService<T> {
   async paginate(skip: number, take: number): Promise<T[]> {
     return this.repository.find({ skip, take });
   }
+
+  // private getRelations(): string[] {
+  //   if (this.repository.metadata.relations.length > 0) {
+  //     return this.repository.metadata.relations.map(rel => rel.propertyName);
+  //   }
+  //   return [];
+  // }
 }

@@ -16,14 +16,7 @@ export class FloorService extends BaseService<Floor> {
     ) {
         super(floorRepository);
     }
-
-    async create(createFloorDto: CreateFloorDto): Promise<Floor> {
-        const floor = this.floorRepository.create({
-            name: createFloorDto.name,
-            building: { id: createFloorDto.buildingId }
-        });
-        return this.floorRepository.save(floor);
-    }
+1
 
     // Additional methods can be added here
 } 

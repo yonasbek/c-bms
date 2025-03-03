@@ -21,17 +21,7 @@ async function bootstrap() {
     .setTitle('API Documentation')
     .setDescription('API documentation for the backend services')
     .setVersion('1.0')
-    .addBearerAuth(
-      {
-        type: 'http',
-        scheme: 'bearer',
-        bearerFormat: 'JWT',
-        name: 'JWT',
-        description: 'Enter JWT token',
-        in: 'header',
-      },
-      'JWT-auth', // This is a key to be used in the @ApiBearerAuth() decorator
-    )
+    .addBearerAuth()
     .build();
     
   const document = SwaggerModule.createDocument(app, config);
@@ -46,7 +36,16 @@ async function bootstrap() {
   
   SwaggerModule.setup('api-docs', app, document, customOptions);
   
-  app.setGlobalPrefix('api'); // This would make all routes start with /api
+  // app.setGlobalPrefix('api'); // This would make all routes start with /api
+  
+  // Update the Swagger document to reflect the global prefix
+  // SwaggerModule.setup('api-docs', app, document, {
+  //   swaggerOptions: {
+  //     url: '/api-docs-json', // Ensure the JSON endpoint is prefixed
+  //     persistAuthorization: true,
+  //   },
+  //   customSiteTitle: 'API Documentation',
+  // });
   
   await app.listen(3000);
 }

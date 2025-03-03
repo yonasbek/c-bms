@@ -1,12 +1,15 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { Item } from '../item/item.entity';
 import { BaseEntity } from '../common/base.entity';
 import { Building } from 'src/building/building.entity';
 @Entity()
 export class Inventory extends BaseEntity {
 
+  @Column()
+  itemId: number;
 
   @ManyToOne(() => Item, { eager: true })
+  @JoinColumn({ name: 'itemId' }) // Explicitly define the foreign key column
   item: Item;
 
   @Column()
@@ -21,6 +24,10 @@ export class Inventory extends BaseEntity {
   @Column()
   description: string;
 
+  @Column()
+  buildingId: number;
+
   @ManyToOne(() => Building, { eager: true })
+  @JoinColumn({ name: 'buildingId' }) // Explicitly define the foreign key column
   building: Building;
 } 
