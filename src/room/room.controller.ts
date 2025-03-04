@@ -1,10 +1,12 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { RoomService } from './room.service';
 import { Room } from './room.entity';
 import { BaseController } from '../common/base.controller';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { UseGuards } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import upload from '../config/multer.config'; // Import multer config
 
 @Controller('room')
 @ApiBearerAuth() // Show auth button in Swagger
@@ -27,5 +29,7 @@ export class RoomController extends BaseController<Room> {
     async getRoomByBuildingId(@Param('buildingId') buildingId: number): Promise<Room[]> {
         return this.roomService.getRoomByBuildingId(buildingId);
     }
+
+
     // Additional endpoints can be added here
 } 

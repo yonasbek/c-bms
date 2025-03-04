@@ -22,3 +22,5 @@ export class GetMaintenanceRequestByRoomIdDto {
     @IsNotEmpty()
     roomId: number;
 }
+
+
