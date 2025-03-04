@@ -15,6 +15,7 @@ import { BuildingUserModule } from './building-user/building-user.module';
 import { PaymentModule } from './payment/payment.module';
 import { RoomModule } from './room/room.module';
 import { FloorModule } from './floor/floor.module';
+import { BuildingTenantModule } from './building-tenant/building-tenant.module';
 
 @Module({
   imports: [
@@ -31,7 +32,8 @@ import { FloorModule } from './floor/floor.module';
     BuildingUserModule,
     PaymentModule,
     RoomModule,
-    FloorModule
+    FloorModule,
+    BuildingTenantModule
   ],
   controllers: [AppController],
   providers: [AppService],

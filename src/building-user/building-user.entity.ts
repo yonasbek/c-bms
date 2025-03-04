@@ -15,7 +15,7 @@ export class BuildingUser extends BaseEntity {
     @JoinColumn({ name: 'buildingId' }) // Explicitly define the foreign key column
     building: Building;
 
-    @ManyToOne(() => User, { eager: false }) // Establish foreign key relationship with User
+    @ManyToOne(() => User, { eager: true }) // Establish foreign key relationship with User
     @JoinColumn({ name: 'userId' }) // Explicitly define the foreign key column
     user: User;
 } 
