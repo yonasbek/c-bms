@@ -16,6 +16,9 @@ export class RoomService extends BaseService<Room> {
     async getRoomByFloorId(floorId: number): Promise<Room[]> {
         return this.roomRepository.find({ where: { floorId: floorId } });
     }
+    async getRoomByBuildingId(buildingId: number): Promise<Room[]> {
+        return this.roomRepository.find({ where: { floor: { buildingId: buildingId } } });
+    }
 
     // Additional methods can be added here
 } 

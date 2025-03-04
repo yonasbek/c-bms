@@ -21,5 +21,11 @@ export class RoomController extends BaseController<Room> {
         return this.roomService.getRoomByFloorId(floorId);
     }
 
+    @Get('building/:buildingId')
+    @ApiOperation({ summary: 'Get rooms by building id' })
+    @ApiResponse({ status: 200, description: 'Rooms retrieved successfully' })
+    async getRoomByBuildingId(@Param('buildingId') buildingId: number): Promise<Room[]> {
+        return this.roomService.getRoomByBuildingId(buildingId);
+    }
     // Additional endpoints can be added here
 } 

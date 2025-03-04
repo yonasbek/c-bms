@@ -30,7 +30,7 @@ export class Contract extends BaseEntity {
   @Column()
   monthly_rent: number;
 
-  @Column()
+  @Column({ nullable: true })
   file_url: string;
 
   @Column()

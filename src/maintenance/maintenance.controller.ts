@@ -13,11 +13,10 @@ export class MaintenanceController extends BaseController<MaintenanceRequest> {
   constructor(private readonly maintenanceService: MaintenanceService) {
     super(maintenanceService);
   }
-  @Get('room/:roomId')
-  @ApiOperation({ summary: 'Get maintenance requests by room id' })
-  @ApiBody({ type: GetMaintenanceRequestByRoomIdDto })
+  @Get('building/:buildingId')
+  @ApiOperation({ summary: 'Get maintenance requests by building id' })
   @ApiResponse({ status: 200, description: 'Maintenance requests retrieved successfully' })
-  async getMaintenanceRequestByRoomId(@Param('roomId') getMaintenanceRequestByRoomIdDto: GetMaintenanceRequestByRoomIdDto): Promise<MaintenanceRequest[]> {
-    return this.maintenanceService.getMaintenanceRequestByRoomId(getMaintenanceRequestByRoomIdDto);
+  async getMaintenanceRequestByBuildingId(@Param('buildingId') buildingId: number): Promise<MaintenanceRequest[]> {
+    return this.maintenanceService.getMaintenanceRequestByBuildingId(buildingId);
   }
 } 
