@@ -18,7 +18,10 @@ export class MaintenanceRequest extends BaseEntity {
   @Column()
   request_status: string;
 
-  @Column()
+  @Column({ nullable: true })
   special_note: string;
+
+  @Column({ nullable: true })
+  priority: string;
   
 } 

@@ -38,5 +38,8 @@ export class CreateContractDto {
   status: string;
 } 
 
-
+export class FileDto {
+  @ApiProperty({ type: 'string', format: 'binary' })
+  file: any;
+}
 

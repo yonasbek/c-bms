@@ -15,7 +15,8 @@ async function bootstrap() {
   
   // Apply validation globally
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
-  
+  // app.setGlobalPrefix('api'); // This would make all routes start with /api
+
   // Configure Swagger
   const config = new DocumentBuilder()
     .setTitle('API Documentation')
@@ -36,7 +37,6 @@ async function bootstrap() {
   
   SwaggerModule.setup('api-docs', app, document, customOptions);
   
-  // app.setGlobalPrefix('api'); // This would make all routes start with /api
   
   // Update the Swagger document to reflect the global prefix
   // SwaggerModule.setup('api-docs', app, document, {
