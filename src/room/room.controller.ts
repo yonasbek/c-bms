@@ -1,13 +1,14 @@
-import { Controller, Get, Param, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Param, Post, UploadedFile, UseInterceptors, Patch, Body, UseGuards } from '@nestjs/common';
 import { RoomService } from './room.service';
 import { Room } from './room.entity';
 import { BaseController } from '../common/base.controller';
-import { ApiBearerAuth, ApiBody, ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import { UseGuards } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import upload from '../config/multer.config'; // Import multer config
+import { UpdateRoomDto } from './room.dto';
 
+@ApiTags('Rooms')
 @Controller('room')
 @ApiBearerAuth() // Show auth button in Swagger
 @UseGuards(JwtAuthGuard)
@@ -30,6 +31,18 @@ export class RoomController extends BaseController<Room> {
         return this.roomService.getRoomByBuildingId(buildingId);
     }
 
+    @Patch(':roomId')
+    @ApiOperation({ summary: 'Update a room by ID' })
+    @ApiParam({ name: 'roomId', description: 'Room ID' })
+    @ApiBody({ type: UpdateRoomDto })
+    @ApiResponse({ status: 200, description: 'Room updated successfully' })
+    @ApiResponse({ status: 404, description: 'Room not found' })
+    async updateRoom(
+        @Param('roomId') roomId: number,
+        @Body() updateRoomDto: UpdateRoomDto
+    ): Promise<Room> {
+        return this.roomService.updateRoom(roomId, updateRoomDto);
+    }
 
     // Additional endpoints can be added here
 } 

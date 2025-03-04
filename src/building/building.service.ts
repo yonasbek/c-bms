@@ -20,9 +20,10 @@ export class BuildingService extends BaseService<Building> {
     async getBuildingContracts(buildingId: number): Promise<Contract[]> {
         const contracts = await this.contractRepository
             .createQueryBuilder('contract')
-            .innerJoin('contract.room', 'room')
-            .innerJoin('room.floor', 'floor')
-            .innerJoin('floor.building', 'building')
+            .leftJoinAndSelect('contract.user', 'user')
+            .leftJoinAndSelect('contract.room', 'room')
+            .leftJoinAndSelect('room.floor', 'floor')
+            .leftJoinAndSelect('floor.building', 'building')
             .where('building.id = :buildingId', { buildingId })
             .getMany();
 
