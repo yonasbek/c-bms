@@ -1,16 +1,17 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { BaseEntity } from '../common/base.entity';
 import { Contract } from 'src/contract/contract.entity';
+import { Room } from 'src/room/room.entity';
 
 @Entity()
 export class MaintenanceRequest extends BaseEntity {
 
   @Column()
-  contractId: number;
+  roomId: number;
 
-  @ManyToOne(() => Contract, { eager: true }) // Establish foreign key relationship with Contract
-  @JoinColumn({ name: 'contractId' }) // Explicitly define the foreign key column
-  contract: Contract;
+  @ManyToOne(() => Room, { eager: true }) // Establish foreign key relationship with Contract
+  @JoinColumn({ name: 'roomId' }) // Explicitly define the foreign key column
+  room: Room;
 
   @Column()
   description: string;

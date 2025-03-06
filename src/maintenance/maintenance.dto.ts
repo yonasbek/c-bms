@@ -5,7 +5,7 @@ export class CreateMaintenanceDto {
   @ApiProperty({ example: 'contract_1' })
   @IsNotEmpty()
   @IsString()
-  contract_id: string;
+  roomId: string;
 
   @ApiProperty({ example: 'Leaky faucet' })
   @IsNotEmpty()

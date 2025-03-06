@@ -11,12 +11,8 @@ export class InventoryService extends BaseService<Inventory> {
     super(repository);
   }
 
-  async create(createInventoryDto: CreateInventoryDto): Promise<Inventory> {
-    const item = this.repository.create(createInventoryDto);
-    return this.repository.save(item);
+  async getInventoryByBuildingId(buildingId: number): Promise<Inventory[]> {
+    return this.repository.find({ where: { buildingId: buildingId } });
   }
 
-  async findAll(): Promise<Inventory[]> {
-    return this.repository.find();
-  }
 } 

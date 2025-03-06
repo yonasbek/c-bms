@@ -12,6 +12,6 @@ export class MaintenanceService extends BaseService<MaintenanceRequest> {
   }
 
   async getMaintenanceRequestByBuildingId(buildingId: number): Promise<MaintenanceRequest[]> {
-    return this.repository.find({ where: { contract: {room: {floor: {buildingId: buildingId}} } } });
+    return this.repository.find({ where: { room: {floor: {buildingId: buildingId}} }  });
   }
 } 
