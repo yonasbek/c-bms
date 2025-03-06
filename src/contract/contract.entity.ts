@@ -36,7 +36,7 @@ export class Contract extends BaseEntity {
   @Column()
   contract_status: string;
 
-  @OneToMany(() => Payment, (payment) => payment.contract, { eager: true })
+  @OneToMany(() => Payment, (payment) => payment.contract)
   payments: Payment[];
 
 } 
