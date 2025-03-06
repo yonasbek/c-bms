@@ -16,6 +16,7 @@ import { PaymentModule } from './payment/payment.module';
 import { RoomModule } from './room/room.module';
 import { FloorModule } from './floor/floor.module';
 import { BuildingTenantModule } from './building-tenant/building-tenant.module';
+import { PaymentService } from './payment/payment.service';
 
 @Module({
   imports: [
@@ -37,5 +38,6 @@ import { BuildingTenantModule } from './building-tenant/building-tenant.module';
   ],
   controllers: [AppController],
   providers: [AppService],
+
 })
 export class AppModule {}

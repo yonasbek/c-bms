@@ -6,6 +6,8 @@ import { CreateBuildingDto } from './building.dto';
 import { BaseService } from '../common/base.service';
 import { Contract } from '../contract/contract.entity';
 import { Payment } from 'src/payment/payment.entity';
+import { PaymentService } from 'src/payment/payment.service';
+
 @Injectable()
 export class BuildingService extends BaseService<Building> {
     constructor(
@@ -13,8 +15,7 @@ export class BuildingService extends BaseService<Building> {
         private readonly buildingRepository: Repository<Building>,
         @InjectRepository(Contract)
         private readonly contractRepository: Repository<Contract>,
-        @InjectRepository(Payment)
-        private readonly paymentRepository: Repository<Payment>
+        private readonly paymentService: PaymentService
     ) {
         super(buildingRepository);
     }
@@ -36,7 +37,7 @@ export class BuildingService extends BaseService<Building> {
             }
         }
 
-        const payments = await this.paymentRepository.find({ where: { contractId: In(contracts.map(contract => contract.id)) } });
+        const payments = await this.paymentService.findAll({ where: { contractId: In(contracts.map(contract => contract.id)) } });
         contracts.forEach(contract => {
             contract.payments = payments.filter(payment => payment.contractId === contract.id);
         });

@@ -9,5 +9,6 @@ import { Contract } from '../contract/contract.entity'; // Import Contract entit
     imports: [TypeOrmModule.forFeature([Payment, Contract])],
     controllers: [PaymentController],
     providers: [PaymentService],
+    exports: [PaymentService],
 })
 export class PaymentModule {} 
