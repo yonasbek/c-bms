@@ -1,10 +1,14 @@
 import { BaseEntity } from '../common/base.entity'; // Adjust the path as necessary
-import { Entity, Column, ManyToOne } from 'typeorm';
+import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { Contract } from '../contract/contract.entity'; // Import the Contract entity
 
 @Entity('payment')
 export class Payment extends BaseEntity {
-    @ManyToOne(() => Contract, (contract) => contract.payments, { eager: true }) // Establish foreign key relationship with Contract
+    @Column()
+    contractId: number;
+
+    @ManyToOne(() => Contract, (contract) => contract.payments, { eager: true })
+    @JoinColumn({ name: 'contractId' }) // Establish foreign key relationship with Contract
     contract: Contract;
 
     @Column()
