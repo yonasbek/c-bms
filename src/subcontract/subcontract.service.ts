@@ -11,12 +11,7 @@ export class SubContractService extends BaseService<SubContract> {
     super(repository);
   }
 
-  async create(createSubContractDto: CreateSubContractDto): Promise<SubContract> {
-    const subContract = this.repository.create(createSubContractDto);
-    return this.repository.save(subContract);
-  }
-
-  async findAll(): Promise<SubContract[]> {
-    return this.repository.find();
+  async getSubContractsByBuildingId(buildingId: string): Promise<SubContract[]> {
+    return this.repository.find({ where: { buildingId } });
   }
 } 

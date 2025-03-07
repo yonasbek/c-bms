@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { BaseEntity } from '../common/base.entity';
+import { Building } from 'src/building/building.entity';
 
 @Entity()
 export class SubContract extends BaseEntity {
@@ -20,12 +21,34 @@ export class SubContract extends BaseEntity {
   @Column()
   number_of_employees: number;
 
-  @Column()
+  @Column({nullable: true})
   file_url: string;
 
   @Column()
   service_type: string;
 
   @Column()
-  building_ids: string;
+  buildingId: string;
+
+  @Column()
+  contact_name: string
+
+  @Column()
+  contact_phone: string
+
+  @Column()
+  contact_email: string
+
+  @Column()
+  service_days: string
+
+  @Column()
+  service_hours: string
+
+  @Column({default: 'active'})
+  status: string
+
+  @ManyToOne(() => Building, (building) => building.subContracts)
+  @JoinColumn({ name: 'buildingId' })
+  building: Building; 
 } 
