@@ -44,10 +44,6 @@ export class NotificationResponseDto {
 }
 
 export class CreateNotificationDto {
-    @ApiProperty({ example: 'New Contract Created' })
-    @IsNotEmpty()
-    @IsString()
-    name: string;
 
     @ApiProperty({ 
         enum: NotificationType,

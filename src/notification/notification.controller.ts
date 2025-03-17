@@ -3,7 +3,7 @@ import { NotificationService } from './notification.service';
 import { Notification } from './notification.entity';
 import {  CreateNotificationDto, NotificationResponseDto, NotificationType } from './notification.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import { ApiBearerAuth, ApiTags, ApiOperation, ApiResponse, ApiParam } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags, ApiOperation, ApiResponse, ApiParam, ApiBody } from '@nestjs/swagger';
 
 @ApiTags('Notifications')
 @Controller('notifications')
@@ -14,9 +14,10 @@ export class NotificationController {
 
     @Post()
     @ApiOperation({ summary: 'Create a new notification' })
+    @ApiBody({ type: CreateNotificationDto })
     @ApiResponse({ status: 201, description: 'Notification created successfully' })
     async create(@Body() createNotificationDto: CreateNotificationDto): Promise<NotificationResponseDto> {
-        const notification = await this.notificationService.create(createNotificationDto);
+        const notification = await this.notificationService.createNotification(createNotificationDto);
         return this.transformToResponseDto(notification);
     }
 
