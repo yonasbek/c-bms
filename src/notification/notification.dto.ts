@@ -1,29 +1,49 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString } from 'class-validator';
 
-export class CreateNotificationDto {
+export class CreateBulkNotificationDto {
   @ApiProperty({ example: 'New Contract' })
   @IsNotEmpty()
   @IsString()
-  name: string;
+  message: string;
 
-  @ApiProperty({ example: 'contract' })
+  @ApiProperty({ example: 'sms, push' })
   @IsNotEmpty()
   @IsString()
   type: string;
 
-  @ApiProperty({ example: 'A new contract has been created.' })
-  @IsNotEmpty()
-  @IsString()
-  description: string;
 
-  @ApiProperty({ example: 'group1' })
+  @ApiProperty({ example: 'bulk' })
   @IsNotEmpty()
   @IsString()
   group_type: string;
 
   @ApiProperty({ example: 'tenant_1' })
+  @IsString()
+  tenant_ids?: number [];
+
+
+} 
+
+export class CreateSingleNotificationDto {
+  @ApiProperty({ example: 'New Contract' })
   @IsNotEmpty()
   @IsString()
-  tenant_id: string;
+  message: string;
+
+  @ApiProperty({ example: 'sms, push' })
+  @IsNotEmpty()
+  @IsString()
+  type: string;
+
+
+  @ApiProperty({ example: 'single' })
+  @IsNotEmpty()
+  @IsString()
+  group_type: string;
+
+  @ApiProperty({ example: 'tenant_1' })
+  tenant_id?: number;
+
+
 } 

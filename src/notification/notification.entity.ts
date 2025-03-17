@@ -1,22 +1,18 @@
+import { BaseEntity } from 'src/common/base.entity';
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity()
-export class Notification {
-  @PrimaryGeneratedColumn()
-  id: number;
+export class Notification extends BaseEntity {
 
   @Column()
-  name: string;
+  message: string;
 
   @Column()
   type: string;
 
   @Column()
-  description: string;
-
-  @Column()
   group_type: string;
 
   @Column()
-  tenant_id: string;
+  tenant_id: number;
 } 
