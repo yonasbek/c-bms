@@ -1,49 +1,91 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsString, IsOptional, IsNumber, IsEnum } from 'class-validator';
 
-export class CreateBulkNotificationDto {
-  @ApiProperty({ example: 'New Contract' })
-  @IsNotEmpty()
-  @IsString()
-  message: string;
+// Define notification types as an enum for better type safety
+export enum NotificationType {
+    CONTRACT = 'contract',
+    PAYMENT = 'payment',
+    MAINTENANCE = 'maintenance',
+    ANNOUNCEMENT = 'announcement',
+    OTHER = 'other'
+}
 
-  @ApiProperty({ example: 'sms, push' })
-  @IsNotEmpty()
-  @IsString()
-  type: string;
+export class NotificationResponseDto {
+    @ApiProperty({ example: 1 })
+    id: number;
 
+    @ApiProperty({ enum: NotificationType })
+    type: NotificationType;
 
-  @ApiProperty({ example: 'bulk' })
-  @IsNotEmpty()
-  @IsString()
-  group_type: string;
+    @ApiProperty({ example: 'A new contract has been created' })
+    message: string;
 
-  @ApiProperty({ example: 'tenant_1' })
-  @IsString()
-  tenant_ids?: number [];
+    @ApiProperty({ 
+        example: 1, 
+        description: 'User ID if notification is for a specific user, null if for all building users',
+        required: false
+    })
+    userId?: number;
 
+    @ApiProperty()
+    user?: any;
 
-} 
+    @ApiProperty({ example: 1 })
+    buildingId: number;
 
-export class CreateSingleNotificationDto {
-  @ApiProperty({ example: 'New Contract' })
-  @IsNotEmpty()
-  @IsString()
-  message: string;
+    @ApiProperty()
+    building: any;
 
-  @ApiProperty({ example: 'sms, push' })
-  @IsNotEmpty()
-  @IsString()
-  type: string;
+    @ApiProperty()
+    created_at: Date;
 
+    @ApiProperty()
+    modified_at: Date;
+}
 
-  @ApiProperty({ example: 'single' })
-  @IsNotEmpty()
-  @IsString()
-  group_type: string;
+export class CreateNotificationDto {
+    @ApiProperty({ example: 'New Contract Created' })
+    @IsNotEmpty()
+    @IsString()
+    name: string;
 
-  @ApiProperty({ example: 'tenant_1' })
-  tenant_id?: number;
+    @ApiProperty({ 
+        enum: NotificationType,
+        example: NotificationType.CONTRACT,
+        description: 'Type of notification'
+    })
+    @IsNotEmpty()
+    @IsEnum(NotificationType)
+    type: NotificationType;
 
+    @ApiProperty({ example: 'A new contract has been created' })
+    @IsNotEmpty()
+    @IsString()
+    message: string;
 
+    @ApiProperty({ 
+        example: 1,
+        description: 'User ID if notification is for a specific user, omit if for all building users',
+        required: false
+    })
+    @IsOptional()
+    @IsNumber()
+    userId?: number;
+
+    @ApiProperty({ example: 1 })
+    @IsNotEmpty()
+    @IsNumber()
+    buildingId: number;
+}
+
+export class CreateUserNotificationDto {
+    @ApiProperty({ example: 1 })
+    @IsNotEmpty()
+    @IsNumber()
+    userId: number;
+
+    @ApiProperty({ example: 1 })
+    @IsNotEmpty()
+    @IsNumber()
+    notificationId: number;
 } 

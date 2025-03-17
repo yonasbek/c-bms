@@ -1,70 +1,98 @@
-import { Injectable } from '@nestjs/common';
-import { HttpService } from '@nestjs/axios';
-import { BaseService } from '../common/base.service';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Notification } from './notification.entity';
-import { CreateBulkNotificationDto, CreateSingleNotificationDto } from './notification.dto';
-import { BuildingTenant } from 'src/building-tenant/building-tenant.entity';
-import { User } from 'src/users/users.entity';
+import { CreateNotificationDto } from './notification.dto';
+import { BaseService } from '../common/base.service';
+import { User } from '../users/users.entity';
+
 @Injectable()
 export class NotificationService extends BaseService<Notification> {
-  constructor(
-    @InjectRepository(Notification) repository: Repository<Notification>,
-    private httpService: HttpService,
-    @InjectRepository(BuildingTenant)
-    private readonly buildingTenantRepository: Repository<BuildingTenant>,
-    @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
-  ) {
-    super(repository);
-  }
-
-  async createBulkNotification(createBulkNotificationDto: CreateBulkNotificationDto): Promise<boolean> {
-    try {
-    createBulkNotificationDto.tenant_ids.forEach(async (tenant_id) => {
-      let notification = new Notification();
-      notification.message = createBulkNotificationDto.message;
-      notification.type = createBulkNotificationDto.type;
-      notification.group_type = createBulkNotificationDto.group_type;
-      notification.tenant_id = tenant_id;
-      const result = this.repository.create(notification);
-      const buildingTenant = await this.buildingTenantRepository.findOne({ where: { id: tenant_id as any } });
-      const user = await this.userRepository.findOne({ where: { id: buildingTenant.userId } });
-      // const sms = await this.sendSms(user.phone, createBulkNotificationDto.message);
-      // if (sms) {
-      //   this.repository.save(result);
-      // }
-    });
-    return true;
-  }
-  catch (error) {
-    console.log(error);
-    return false;
-  }
-  }
-
-  async createSingleNotification(createSingleNotificationDto: CreateSingleNotificationDto): Promise<Notification> {
-    try {
-      let notification = new Notification();
-      notification.message = createSingleNotificationDto.message;
-      notification.type = createSingleNotificationDto.type;
-      notification.group_type = createSingleNotificationDto.group_type;
-      notification.tenant_id = createSingleNotificationDto.tenant_id;
-      const result = this.repository.create(notification);
-      const buildingTenant = await this.buildingTenantRepository.findOne({ where: { id: createSingleNotificationDto.tenant_id as any } });
-      const user = await this.userRepository.findOne({ where: { id: buildingTenant.userId } });
-      // const sms = await this.sendSms(user.phone, createSingleNotificationDto.message);
-      // if (sms) {
-      //   this.repository.save(result);
-      // }
-      return result;
+    constructor(
+        @InjectRepository(Notification)
+        private readonly notificationRepository: Repository<Notification>,
+        @InjectRepository(User)
+        private readonly userRepository: Repository<User>
+    ) {
+        super(notificationRepository);
     }
-    catch (error) {
-      console.log(error);
-      return null;
-    }
-  }
 
-  
+    async create(createNotificationDto: CreateNotificationDto): Promise<Notification> {
+        const notification = this.notificationRepository.create({
+            type: createNotificationDto.type,
+            message: createNotificationDto.message,
+            userId: createNotificationDto.userId || null,
+            buildingId: createNotificationDto.buildingId
+        });
+
+        const savedNotification = await this.notificationRepository.save(notification);
+
+        // If this is an individual notification, load the user
+        if (savedNotification.userId) {
+            return this.notificationRepository.findOne({ 
+                where: { id: savedNotification.id }, 
+                relations: ['user'] 
+            });
+        }
+
+        return savedNotification;
+    }
+
+    async getBuildingNotifications(buildingId: number): Promise<Notification[]> {
+        // Get all notifications for the building
+        const notifications = await this.notificationRepository.find({
+            where: { buildingId },
+            relations: ['building'],
+            order: { created_at: 'DESC' }
+        });
+
+        // For notifications with userId, load the user
+        for (const notification of notifications) {
+            if (notification.userId) {
+                notification.user = await this.userRepository.findOne({
+                    where: { id: notification.userId }
+                });
+            }
+        }
+
+        return notifications;
+    }
+
+    async getUserNotifications(userId: number): Promise<Notification[]> {
+        // Get all notifications for this specific user and all group notifications for their buildings
+        const userNotifications = await this.notificationRepository.find({
+            where: [
+                { userId },
+                { userId: null } // Group notifications
+            ],
+            relations: ['building'],
+            order: { created_at: 'DESC' }
+        });
+
+        // Filter to only include group notifications for buildings the user belongs to
+        const userBuildingIds = [...new Set(userNotifications.map(n => n.buildingId))];
+        
+        return userNotifications.filter(notification => 
+            notification.userId === userId || 
+            (notification.userId === null && userBuildingIds.includes(notification.buildingId))
+        );
+    }
+
+    async findAll(): Promise<Notification[]> {
+        const notifications = await this.notificationRepository.find({
+            relations: ['building'],
+            order: { created_at: 'DESC' }
+        });
+
+        // For notifications with userId, load the user
+        for (const notification of notifications) {
+            if (notification.userId) {
+                notification.user = await this.userRepository.findOne({
+                    where: { id: notification.userId }
+                });
+            }
+        }
+
+        return notifications;
+    }
 } 

@@ -1,18 +1,34 @@
-import { BaseEntity } from 'src/common/base.entity';
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { BaseEntity } from '../common/base.entity';
+import { NotificationType } from './notification.dto';
+import { Building } from '../building/building.entity';
+import { User } from '../users/users.entity';
 
-@Entity()
+@Entity('notifications')
 export class Notification extends BaseEntity {
 
   @Column()
   message: string;
 
-  @Column()
-  type: string;
+  @Column({
+    type: 'enum',
+    enum: NotificationType,
+    default: NotificationType.OTHER
+  })
+  type: NotificationType;
+
+
+  @Column({ nullable: true })
+  userId: number;
 
   @Column()
-  group_type: string;
+  buildingId: number;
 
-  @Column()
-  tenant_id: number;
+  @ManyToOne(() => Building, { eager: true })
+  @JoinColumn({ name: 'buildingId' })
+  building: Building;
+
+  @ManyToOne(() => User, { eager: false })
+  @JoinColumn({ name: 'userId' })
+  user: User;
 } 
