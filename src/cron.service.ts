@@ -6,8 +6,9 @@ import { AppService } from './app.service';
 export class CronService {
     constructor(private readonly appService: AppService) {}
   // Run every day at midnight
-  @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
+  @Cron(CronExpression.EVERY_DAY_AT_10AM)
   handleDailyTask() {
+    this.appService.getContractDueDate();
     console.log('Running daily task at midnight');
     // Add your daily task logic here
   }
@@ -22,7 +23,6 @@ export class CronService {
   // Run every 5 minutes
   @Cron('*/5 * * * *')
   handleFiveMinuteTask() {
-    this.appService.getContractDueDate();
     console.log('Running task every 5 minutes');
     // Add your 5-minute task logic here
   }

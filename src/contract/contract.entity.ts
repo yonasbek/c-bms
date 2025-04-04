@@ -3,6 +3,7 @@ import { BaseEntity } from '../common/base.entity';
 import { User } from 'src/users/users.entity';
 import { Room } from 'src/room/room.entity';
 import { Payment } from 'src/payment/payment.entity';
+import { ContractDocument } from 'src/contract-document/contract-document.entity';
 
 @Entity('contract')
 export class Contract extends BaseEntity {
@@ -40,5 +41,8 @@ export class Contract extends BaseEntity {
 
   @OneToMany(() => Payment, (payment) => payment.contract)
   payments: Payment[];
+
+  @OneToMany(() => ContractDocument, (contractDocument) => contractDocument.contract, { eager: true })
+  contractDocuments: ContractDocument[];
 
 } 
