@@ -17,6 +17,11 @@ import { RoomModule } from './room/room.module';
 import { FloorModule } from './floor/floor.module';
 import { BuildingTenantModule } from './building-tenant/building-tenant.module';
 import { PaymentService } from './payment/payment.service';
+import { ScheduleModule } from '@nestjs/schedule';
+import { CronService } from './cron.service';
+import { Contract } from './contract/contract.entity';
+import { Payment } from './payment/payment.entity';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [
@@ -34,10 +39,13 @@ import { PaymentService } from './payment/payment.service';
     PaymentModule,
     RoomModule,
     FloorModule,
-    BuildingTenantModule
+    BuildingTenantModule,
+    ScheduleModule.forRoot(),
+    TypeOrmModule.forFeature([Contract, Payment]),
+    
   ],
   controllers: [AppController],
-  providers: [AppService],
-
+  providers: [AppService, CronService],
+  exports: [AppService]
 })
 export class AppModule {}

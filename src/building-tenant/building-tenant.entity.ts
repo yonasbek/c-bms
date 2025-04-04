@@ -11,6 +11,9 @@ export class BuildingTenant extends BaseEntity {
     @Column({ nullable: false }) 
     buildingId: number;
 
+    @Column({ nullable: false }) 
+    tin_number: string;
+
     @ManyToOne(() => Building, { eager: true })
     @JoinColumn({ name: 'buildingId' })
     building: Building;

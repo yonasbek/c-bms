@@ -33,6 +33,8 @@ export class Contract extends BaseEntity {
   @Column({ nullable: true })
   file_url: string;
 
+  @Column({ nullable: true })
+  rate_per_sqm: number;
   @Column()
   contract_status: string;
 

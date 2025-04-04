@@ -26,6 +26,9 @@ export class Payment extends BaseEntity {
     @Column()
     payment_date: Date;
 
+    @Column()
+    payment_type: string;
+
     @Column({ nullable: true })
     file_url: string; // Nullable field for file URL
 } 
