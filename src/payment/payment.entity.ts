@@ -26,7 +26,7 @@ export class Payment extends BaseEntity {
     @Column()
     payment_date: Date;
 
-    @Column()
+    @Column({nullable: true})
     payment_type: string;
 
     @Column({ nullable: true })
