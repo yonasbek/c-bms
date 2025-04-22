@@ -26,34 +26,26 @@ async function bootstrap() {
 
   // Configure Swagger
   const config = new DocumentBuilder()
-    .setTitle('API Documentation')
-    .setDescription('API documentation for the backend services')
+    .setTitle('BMS API Documentation')
+    .setDescription('API documentation for the Building Management System')
     .setVersion('1.0')
     .addBearerAuth()
     .build();
     
   const document = SwaggerModule.createDocument(app, config);
   
-  // Add custom CSS to improve the styling (optional)
-  const customOptions = {
+  // Setup Swagger at the /api path
+  SwaggerModule.setup('api', app, document, {
     swaggerOptions: {
       persistAuthorization: true,
     },
-    customSiteTitle: 'API Documentation',
-  };
+    customSiteTitle: 'BMS API Documentation'
+  });
   
-  SwaggerModule.setup('api-docs', app, document, customOptions);
-  
-  
-  // Update the Swagger document to reflect the global prefix
-  // SwaggerModule.setup('api-docs', app, document, {
-  //   swaggerOptions: {
-  //     url: '/api-docs-json', // Ensure the JSON endpoint is prefixed
-  //     persistAuthorization: true,
-  //   },
-  //   customSiteTitle: 'API Documentation',
-  // });
-  
-  await app.listen(process.env.PORT || 3000, '0.0.0.0');
+  // Start the server
+  const port = process.env.PORT || 3000;
+  await app.listen(port, '0.0.0.0');
+  console.log(`Application is running on: http://localhost:${port}`);
+  console.log(`Swagger documentation is available at: http://localhost:${port}/api`);
 }
 bootstrap();
