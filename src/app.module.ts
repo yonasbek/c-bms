@@ -23,6 +23,7 @@ import { Contract } from './contract/contract.entity';
 import { Payment } from './payment/payment.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ContractDocumentModule } from './contract-document/contract-document.module';
+import { ReportModule } from './report/report.module';
 @Module({
   imports: [
     DatabaseModule,
@@ -41,6 +42,7 @@ import { ContractDocumentModule } from './contract-document/contract-document.mo
     FloorModule,
     BuildingTenantModule,
     ContractDocumentModule,
+    ReportModule,
     ScheduleModule.forRoot(),
     TypeOrmModule.forFeature([Contract, Payment]),
     
