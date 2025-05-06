@@ -18,7 +18,14 @@ export class RoomService extends BaseService<Room> {
         return this.roomRepository.find({ where: { floorId: floorId } });
     }
     async getRoomByBuildingId(buildingId: number): Promise<Room[]> {
-        return this.roomRepository.find({ where: { floor: { buildingId: buildingId } } });
+        return this.roomRepository.find({
+            where: { floor: { buildingId: buildingId } },
+            relations: ['floor'],
+            order: {
+                floor: { name: 'ASC' },
+                name: 'ASC'
+            }
+        });
     }
 
     async updateRoom(roomId: number, updateRoomDto: UpdateRoomDto): Promise<Room> {
