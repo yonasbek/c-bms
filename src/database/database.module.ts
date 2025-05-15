@@ -15,7 +15,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       autoLoadEntities: true,
       synchronize: true, // Auto-migrates schema
       entities: [__dirname + '/../**/*.entity.{js,ts}'],
-      
+      ssl: {
+        rejectUnauthorized: false,
+      },
       logging: true,
     }),
   ],
