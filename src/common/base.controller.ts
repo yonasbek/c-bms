@@ -46,4 +46,9 @@ export class BaseController<T> {
   async search(@Param('field') field: keyof T, @Param('value') value: string): Promise<T[]> {
     return this.baseService.search(field, value);
   }
+  @Post('filter')
+  async filter(@Body() filter: any): Promise<T[]> {
+    return this.baseService.filter(filter);
+  }
+
 }

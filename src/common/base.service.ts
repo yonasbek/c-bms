@@ -36,6 +36,10 @@ export class BaseService<T> {
     return this.repository.find({ skip, take });
   }
 
+  async filter(filter: any): Promise<T[]> {
+    return this.repository.find({ where: { [filter.key]: filter.value } as any });
+  }
+
   // private getRelations(): string[] {
   //   if (this.repository.metadata.relations.length > 0) {
   //     return this.repository.metadata.relations.map(rel => rel.propertyName);
